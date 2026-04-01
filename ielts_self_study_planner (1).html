@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS w/ Bella — IELTS Self Study Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --ink: #1A1A2E;
+    --ink-soft: #4A4A6A;
+    --accent: #C9463D;
+    --accent-light: #F4E6E5;
+    --gold: #C9963D;
+    --gold-light: #FBF3E5;
+    --teal: #2E8B7A;
+    --teal-light: #E3F5F1;
+    --border: rgba(26,26,46,0.12);
+    --card-bg: #FFFFFF;
+    --section-bg: #F5F2EE;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: var(--ink);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(201,70,61,0.15);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 30%;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(201,150,61,0.10);
+  }
+  .header-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+  .header-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .header p { color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 300; }
+
+  .setup-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 900px;
+  }
+  .setup-card h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 1.2rem; color: var(--ink); }
+  .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .score-input-group label {
+    display: block; font-size: 11px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .score-input-group select,
+  .score-input-group input[type="number"] {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--border);
+    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--ink); background: var(--cream); outline: none; transition: border-color 0.2s;
+  }
+  .score-input-group select:focus, .score-input-group input:focus { border-color: var(--accent); }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: white; border: none; border-radius: 10px;
+    padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.1s; margin-top: 1rem;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .nav-tabs {
+    display: flex; gap: 4px; background: var(--section-bg); border-radius: 12px;
+    padding: 4px; margin: 0 auto 1.5rem; max-width: 900px; overflow-x: auto;
+  }
+  .nav-tab {
+    flex: 1; min-width: 80px; padding: 9px 12px; border: none; border-radius: 8px;
+    background: transparent; font-family: 'DM Sans', sans-serif; font-size: 12px;
+    font-weight: 500; color: var(--ink-soft); cursor: pointer; transition: all 0.2s;
+    white-space: nowrap; text-align: center;
+  }
+  .nav-tab.active { background: white; color: var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+
+  .dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+  @media (max-width: 600px) { .dashboard-grid { grid-template-columns: repeat(2, 1fr); } }
+  .metric-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+  .metric-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1; color: var(--ink); }
+  .metric-sub { font-size: 11px; color: var(--ink-soft); margin-top: 4px; }
+
+  .score-bars { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; }
+  .score-bars h3 { font-size: 13px; font-weight: 600; margin-bottom: 1rem; color: var(--ink-soft); letter-spacing: 0.5px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .bar-label { font-size: 12px; font-weight: 500; width: 70px; color: var(--ink); }
+  .bar-track { flex: 1; background: var(--section-bg); border-radius: 20px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 20px; transition: width 0.6s ease; }
+  .bar-score { font-size: 12px; font-weight: 600; width: 36px; text-align: right; }
+
+  .week-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .week-header h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+  .week-nav { display: flex; gap: 8px; }
+  .week-nav button {
+    width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 8px;
+    background: white; cursor: pointer; font-size: 14px; display: flex; align-items: center;
+    justify-content: center; transition: all 0.2s;
+  }
+  .week-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+  .day-card {
+    background: white; border: 1px solid var(--border); border-radius: 10px; padding: 8px 6px;
+    text-align: center; cursor: pointer; transition: all 0.2s; min-height: 90px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .day-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .day-card.today { border-color: var(--accent); background: var(--accent-light); }
+  .day-card.done { border-color: var(--teal); background: var(--teal-light); }
+  .day-name { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); }
+  .day-num { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+  .day-tasks { display: flex; flex-direction: column; gap: 2px; width: 100%; margin-top: 2px; }
+  .day-pill { font-size: 8px; font-weight: 600; border-radius: 4px; padding: 2px 4px; text-align: center; width: 100%; }
+  .pill-L { background: #E8F4FD; color: #1565C0; }
+  .pill-R { background: #FFF3E0; color: #E65100; }
+  .pill-W { background: #EDE7F6; color: #512DA8; }
+  .pill-S { background: #E8F5E9; color: #2E7D32; }
+  .check-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--teal); color: white; font-size: 9px; display: flex; align-items: center; justify-content: center; margin-top: auto; }
+
+  .tasks-panel { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .tasks-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .tasks-header h3 { font-size: 14px; font-weight: 600; }
+  .task-item { display: flex; align-items: center; gap: 12px; padding: 12px 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.15s; }
+  .task-item:hover { background: var(--cream); }
+  .task-item:last-child { border-bottom: none; }
+  .task-check { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--border); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .task-check.checked { background: var(--teal); border-color: var(--teal); }
+  .task-check.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+  .task-info { flex: 1; }
+  .task-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .task-title.done { text-decoration: line-through; color: var(--ink-soft); }
+  .task-meta { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+  .task-badge { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+  .task-dur { font-size: 11px; color: var(--ink-soft); white-space: nowrap; }
+
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .resource-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: all 0.2s; }
+  .resource-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .resource-icon { font-size: 24px; margin-bottom: 8px; }
+  .resource-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .resource-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .resource-tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; padding: 3px 8px; border-radius: 20px; margin-top: 10px; }
+
+  .tip-section { display: flex; flex-direction: column; gap: 10px; }
+  .tip-card { background: white; border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; }
+  .tip-skill { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .tip-text { font-size: 13px; line-height: 1.6; color: var(--ink); }
+
+  .log-section { display: flex; flex-direction: column; gap: 10px; }
+  .log-entry { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: flex-start; }
+  .log-date { font-size: 10px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; }
+  .log-body { flex: 1; }
+  .log-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .log-detail { font-size: 12px; color: var(--ink-soft); }
+  .log-score { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--teal); }
+
+  .band-target { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-left: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+
+  .add-log-form { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+  .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group label { font-size: 11px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 1px; }
+  .form-group input, .form-group select { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; background: var(--cream); }
+  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+
+  .hidden { display: none; }
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">IELTS w/ Bella</div>
+    <h1>IELTS Self Study Planner</h1>
+    <p>Track your progress. Hit your target band score.</p>
+  </div>
+</div>
+
+<div style="background: var(--section-bg); padding: 1rem;">
+  <div class="setup-card">
+    <h2>Your Study Profile</h2>
+
+    <!-- Current Band per skill -->
+    <div style="margin-bottom: 1.25rem;">
+      <div style="font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px;">Current Band Score</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 12px;">
+        <div class="score-input-group">
+          <label>Listening</label>
+          <select id="bandListening" onchange="recalcOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5" selected>5.0</option><option value="5.5">5.5</option>
+            <option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Reading</label>
+          <select id="bandReading" onchange="recalcOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5" selected>5.0</option><option value="5.5">5.5</option>
+            <option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Writing</label>
+          <select id="bandWriting" onchange="recalcOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5" selected>5.0</option><option value="5.5">5.5</option>
+            <option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Speaking</label>
+          <select id="bandSpeaking" onchange="recalcOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5" selected>5.0</option><option value="5.5">5.5</option>
+            <option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <!-- Overall auto-calculated -->
+        <div class="score-input-group">
+          <label>Overall (auto)</label>
+          <div id="overallDisplay" style="padding: 10px 12px; border-radius: 10px; background: var(--ink); color: white; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <span id="overallBand">5.0</span>
+            <span id="overallCEFR" style="font-size: 10px; font-weight: 600; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 20px; letter-spacing: 0.5px;">B2</span>
+          </div>
+          <div id="overallDesc" style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4;">Upper Intermediate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target Band per skill -->
+    <div style="margin-bottom: 1.25rem;">
+      <div style="font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px;">Target Band Score</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 12px;">
+        <div class="score-input-group">
+          <label>Listening</label>
+          <select id="targetListening" onchange="recalcTargetOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option>
+            <option value="6" selected>6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Reading</label>
+          <select id="targetReading" onchange="recalcTargetOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option>
+            <option value="6" selected>6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Writing</label>
+          <select id="targetWriting" onchange="recalcTargetOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option>
+            <option value="6" selected>6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <div class="score-input-group">
+          <label>Speaking</label>
+          <select id="targetSpeaking" onchange="recalcTargetOverall()">
+            <option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option>
+            <option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option>
+            <option value="6" selected>6.0</option><option value="6.5">6.5</option><option value="7">7.0</option>
+            <option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option>
+          </select>
+        </div>
+        <!-- Target Overall auto-calculated -->
+        <div class="score-input-group">
+          <label>Overall (auto)</label>
+          <div style="padding: 10px 12px; border-radius: 10px; background: var(--accent); color: white; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <span id="targetOverallBand">6.0</span>
+            <span id="targetOverallCEFR" style="font-size: 10px; font-weight: 600; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 20px; letter-spacing: 0.5px;">B2</span>
+          </div>
+          <div id="targetOverallDesc" style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4;">Upper Intermediate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Study Settings -->
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px;">Study Settings</div>
+    <div class="score-grid">
+      <div class="score-input-group">
+        <label>Start Study Date</label>
+        <input type="date" id="startDate" onchange="recalcStudyDays()">
+      </div>
+      <div class="score-input-group">
+        <label>Exam Date</label>
+        <input type="date" id="examDate" onchange="recalcStudyDays()">
+      </div>
+      <div class="score-input-group">
+        <label>IELTS Type</label>
+        <select id="ieltsType">
+          <option value="academic">Academic</option>
+          <option value="general">General Training</option>
+        </select>
+      </div>
+      <!-- Hours/day: auto-recommended -->
+      <div class="score-input-group">
+        <label>Recommended Study</label>
+        <div id="hoursRecDisplay" style="padding: 10px 12px; border-radius: 10px; background: var(--teal-light); border: 1.5px solid var(--teal); font-size: 13px; font-weight: 600; color: var(--teal); line-height: 1.3;">
+          <span id="hoursRecValue">2 hrs/day</span>
+        </div>
+        <div id="hoursRecReason" style="font-size: 10px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4;">Set your dates first</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="generatePlan()">Generate My Plan ↗</button>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('dashboard', this)">Dashboard</button>
+    <button class="nav-tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="nav-tab" onclick="showTab('progress', this)">Progress</button>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="fade-in">
+      <div class="dashboard-grid">
+        <div class="metric-card"><div class="metric-label">Current Band</div><div class="metric-value" id="m-current">5.0</div><div class="metric-sub"><span id="m-current-cefr" style="font-weight:600;color:var(--teal);">B1</span> &mdash; <span id="m-current-desc">Intermediate</span></div></div>
+        <div class="metric-card"><div class="metric-label">Target Band</div><div class="metric-value" style="color: var(--accent);" id="m-target">6.0</div><div class="metric-sub"><span id="m-target-cefr" style="font-weight:600;color:var(--accent);">B2</span> &mdash; <span id="m-target-desc">Upper Intermediate</span></div></div>
+        <div class="metric-card"><div class="metric-label">Study Days Left</div><div class="metric-value" id="m-study-days">—</div><div class="metric-sub" id="m-study-sub">until exam</div></div>
+        <div class="metric-card"><div class="metric-label">Rec. Hours/Day</div><div class="metric-value" id="m-hours-rec" style="color: var(--teal);">—</div><div class="metric-sub" id="m-hours-sub">based on your timeline</div></div>
+      </div>
+
+      <!-- Study Log -->
+      <div class="tasks-panel" style="margin-bottom: 1.5rem;">
+        <div class="tasks-header">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;">
+            <h3>Study Log</h3>
+            <span id="studylog-range" style="font-size:11px;color:var(--ink-soft);"></span>
+          </div>
+          <div id="studylog-nav" style="display:flex;gap:8px;">
+            <button onclick="changeStudyPage(-1)" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;background:white;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color=''">&#8249;</button>
+            <button onclick="changeStudyPage(1)" style="width:32px;height:32px;border:1px solid var(--border);border-radius:8px;background:white;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='';this.style.color=''">&#8250;</button>
+          </div>
+        </div>
+        <div style="padding: 1rem 1.25rem 0.5rem;">
+          <!-- Day-of-week headers -->
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Mon</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Tue</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Wed</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Thu</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Fri</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Sat</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);text-align:center;">Sun</div>
+          </div>
+          <div id="studyLogGrid" style="display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+        <div style="border-top: 1px solid var(--border);">
+          <div style="padding: 0.75rem 1.25rem;">
+            <h3 id="selectedDayLabel" style="font-size:13px;font-weight:600;color:var(--ink-soft);">Click a day to see tasks</h3>
+          </div>
+          <div id="dayTasks"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div id="tab-resources" class="hidden fade-in">
+      <p class="section-title">Recommended Resources</p>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="tab-progress" class="hidden fade-in">
+      <p class="section-title">Progress Log</p>
+      <div class="add-log-form">
+        <div class="form-row" style="margin-bottom: 10px;">
+          <div class="form-group">
+            <label>Skill</label>
+            <select id="log-skill"><option>Listening</option><option>Reading</option><option>Writing</option><option>Speaking</option></select>
+          </div>
+          <div class="form-group">
+            <label>Score / Band</label>
+            <input type="number" id="log-score" min="1" max="9" step="0.5" placeholder="e.g. 6.0" style="width: 100px;">
+          </div>
+          <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label>Activity</label>
+            <input type="text" id="log-activity" placeholder="e.g. Practice test #3">
+          </div>
+        </div>
+        <button class="btn-primary" onclick="addLog()">Log Entry ↗</button>
+      </div>
+      <div class="log-section" id="progressLog"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let state = {
+    bandL: 5.0, bandR: 5.0, bandW: 5.0, bandS: 5.0,
+    targetL: 6.0, targetR: 6.0, targetW: 6.0, targetS: 6.0,
+    currentBand: 5.0, targetBand: 6.0, hoursDay: 2,
+    startDate: null, examDate: null,
+    ieltsType: 'academic', weekOffset: 0,
+    completedTasks: JSON.parse(localStorage.getItem('ielts_tasks') || '{}'),
+    logs: JSON.parse(localStorage.getItem('ielts_logs') || '[]'),
+    hoursThisWeek: 0
+  };
+
+  const today = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const skillColors = { Listening: '#1565C0', Reading: '#E65100', Writing: '#512DA8', Speaking: '#2E7D32' };
+  const skillBgs = { Listening: '#E8F4FD', Reading: '#FFF3E0', Writing: '#EDE7F6', Speaking: '#E8F5E9' };
+  const pillClass = { Listening: 'pill-L', Reading: 'pill-R', Writing: 'pill-W', Speaking: 'pill-S' };
+
+  // Bella's actual curriculum — tasks pulled sequentially per skill day
+  const bellaTasks = {
+    Listening: [
+      // Module 1: IELTS Overview
+      { title: 'IELTS Introduction', detail: 'Module 1 — IELTS Overview · Watch: IELTS Exam Format Explained', dur: 11 },
+      { title: 'How to prepare for the IELTS Test', detail: 'Module 1 — Improving Your English Before You Take IELTS (IDP)', dur: 20 },
+      { title: 'How you are scored on the test', detail: 'Module 1 — IELTS terminology: understanding your score', dur: 1 },
+      { title: 'Understanding the listening format', detail: 'Module 1 — IELTS Listening: Techniques and Practice Questions', dur: 35 },
+      { title: 'Listening Overview', detail: 'Module 1 — Best IELTS Listening Strategies | How I get Band 9 every time', dur: 25 },
+      // Module 2: Introduction and Tips
+      { title: 'Understanding everything in the Listening test', detail: 'Module 2 — Boost Your IELTS Listening Skills to Understand Everything', dur: 13 },
+      { title: 'IELTS Listening Band 9 Strategy', detail: 'Module 2 — How Do I Get Band 9 in IELTS Listening?', dur: 11 },
+      { title: 'Strategies and techniques', detail: 'Module 2 — IELTS Listening Tips | 9 Tips for Band 9', dur: 15 },
+      { title: 'Common mistakes in Listening IELTS', detail: 'Module 2 — IELTS Listening: Don\'t Make These 4 Mistakes!', dur: 20 },
+      // Module 3: Names, Plurals, Numbers
+      { title: 'Read and listen for answers', detail: 'Module 3 — IELTS: The EASY Way to Read and Listen for Answers', dur: 15 },
+      { title: 'Listen for English names', detail: 'Module 3 — IELTS Listening: English Names', dur: 10 },
+      { title: 'Listen for Plurals', detail: 'Module 3 — IELTS Listening for Plurals', dur: 12 },
+      { title: 'Listen for Numbers', detail: 'Module 3 — IELTS Listening: Problems with numbers', dur: 6 },
+      { title: 'Answer prediction', detail: 'Module 3 — IELTS Listening Tips: Predicting Answers', dur: 10 },
+      { title: 'Listening Practice 1', detail: 'Module 3 — Timed practice: Names, Plurals & Numbers (Sections 1–2, approx. 15 min audio + review)', dur: 30 },
+      // Module 4: Fill in the Blank, Form & Summary
+      { title: 'Form Completion', detail: 'Module 4 — IELTS Listening Form Completion with Alex', dur: 10 },
+      { title: 'Fill in the Blanks', detail: 'Module 4 — IELTS Listening Tips & Practice | Fill in the blanks', dur: 14 },
+      { title: 'Summary Completion', detail: 'Module 4 — IELTS Listening – Summary Completion Questions', dur: 13 },
+      { title: 'Listening Practice 2', detail: 'Module 4 — Timed practice: Form, Fill in Blank & Summary (Sections 1–2, ~15 min + review)', dur: 30 },
+      // Module 5: Maps Labeling
+      { title: 'IELTS Listening Map Labelling', detail: 'Module 5 — IELTS Listening Map Labelling with Alex', dur: 15 },
+      { title: 'Labelling Maps strategy', detail: 'Module 5 — Get Full Marks After Using This Listening Maps Strategy', dur: 30 },
+      { title: 'Vocabulary for IELTS Maps', detail: 'Module 5 — Band 9 Phrases and Vocabulary for IELTS Map Labelling', dur: 10 },
+      { title: 'Listening Practice 3', detail: 'Module 5 — Timed practice: Maps Labeling (Section 2 style, ~8 min audio + review)', dur: 25 },
+      // Module 6: Matching Questions
+      { title: 'IELTS Listening Matching Questions', detail: 'Module 6 — Matching Questions overview', dur: 10 },
+      { title: 'Strategy for matching information', detail: 'Module 6 — Great strategy for matching information questions', dur: 15 },
+      { title: 'Matching practice', detail: 'Module 6 — Matching exercise with worked examples', dur: 20 },
+      { title: 'Listening Practice 4', detail: 'Module 6 — Timed practice: Matching Questions (Section 3 style, ~10 min audio + review)', dur: 25 },
+      // Module 7: Multiple Choice
+      { title: 'Multiple Choice overview', detail: 'Module 7 — IELTS Listening Multiple Choice introduction', dur: 20 },
+      { title: 'IELTS Listening Multiple Choice strategies', detail: 'Module 7 — Ways to deal with multiple choice questions', dur: 25 },
+      { title: 'Listening Practice 5', detail: 'Module 7 — Timed practice: Multiple Choice (Section 4 style, ~10 min audio + review)', dur: 25 },
+      { title: 'Full Listening Practice', detail: 'Module 7 — Complete timed Listening test: 30 min audio + 10 min answer transfer + self-mark', dur: 40 },
+    ],
+    Reading: [
+      // Module 1
+      { title: 'IELTS Reading Overview', detail: 'Module 1 — The Ultimate Guide to IELTS Reading', dur: 25 },
+      { title: 'IELTS Reading Methods', detail: 'Module 1 — 3 Essential IELTS Reading Strategies', dur: 20 },
+      { title: 'Matching Headings material', detail: 'Module 1 — Matching Heading technique & strategy video', dur: 40 },
+      { title: 'Reading Practice: Matching Headings', detail: 'Module 1 — Practice PDF: Matching Headings', dur: 35 },
+      // Module 2
+      { title: 'True False Not Given — Material 1', detail: 'Module 2 — True, False, Not Given Live Lesson', dur: 45 },
+      { title: 'True False Not Given — Material 2', detail: 'Module 2 — E2 IELTS Reading | TRUE / FALSE / NOT GIVEN with Jay!', dur: 15 },
+      { title: 'True False Not Given sample questions', detail: 'Module 2 — Practice: TRUE - FALSE - NOT GIVEN | YES - NO - NOT GIVEN', dur: 20 },
+      { title: 'Reading Practice: True False Not Given', detail: 'Module 2 — Practice PDF: True False Not Given', dur: 30 },
+      // Module 3
+      { title: 'Steps to Solve Multiple Choice', detail: 'Module 3 — 5 Steps to Solving IELTS Reading Multiple Choice Questions', dur: 20 },
+      { title: 'Multiple Choice strategies', detail: 'Module 3 — IELTS Reading Test: Clear Strategy + Practice for MCQs', dur: 20 },
+      { title: 'Multiple Choice sample questions', detail: 'Module 3 — IELTS Reading: Multiple Choice PRACTICE QUESTIONS with Jay!', dur: 10 },
+      { title: 'Reading Practice: Multiple Choice', detail: 'Module 3 — Practice PDF: Multiple Choice', dur: 60 },
+      // Module 4
+      { title: 'Matching Features — Material 1', detail: 'Module 4 — IELTS Reading Matching Features & Information', dur: 15 },
+      { title: 'Matching Features — Material 2', detail: 'Module 4 — Matching Features video 2', dur: 25 },
+      { title: 'Match Sentence Endings — Material 1', detail: 'Module 4 — IELTS Reading METHODS: Match Sentence Endings', dur: 10 },
+      { title: 'Match Sentence Endings — Material 2', detail: 'Module 4 — IELTS-Simon: Matching sentence endings', dur: 10 },
+      { title: 'Reading Practice: Matching Features & Endings', detail: 'Module 4 — Practice PDF: Matching Feature & Matching Ending', dur: 60 },
+      // Module 5
+      { title: 'Short Answer Questions — Material 1', detail: 'Module 5 — Short Answer Questions strategy video 1', dur: 15 },
+      { title: 'Short Answer Questions — Material 2', detail: 'Module 5 — IELTS Reading – Short Answer Questions', dur: 10 },
+      { title: 'Short Answer Questions — Material 3', detail: 'Module 5 — IELTS General Reading - Short Answer', dur: 25 },
+      { title: 'Reading Practice: Short Answer', detail: 'Module 5 — Practice PDF: Short Answer Questions', dur: 60 },
+      // Module 6a: Sentence Completion
+      { title: 'Sentence Completion — Material 1', detail: 'Module 6a — Sentence Completion strategy video 1', dur: 15 },
+      { title: 'Sentence Completion — Material 2', detail: 'Module 6a — Sentence Completion strategy video 2', dur: 15 },
+      { title: 'Sentence Completion — Material 3', detail: 'Module 6a — Sentence Completion sample questions', dur: 20 },
+      { title: 'Reading Practice: Sentence Completion', detail: 'Module 6a — Practice PDF: Sentence Completion', dur: 60 },
+      // Module 6b: Summary Completion
+      { title: 'Summary Completion — Material 1', detail: 'Module 6b — Summary Completion strategy video 1', dur: 15 },
+      { title: 'Summary Completion — Material 2', detail: 'Module 6b — Summary Completion strategy video 2', dur: 25 },
+      { title: 'Summary Completion sample questions', detail: 'Module 6b — Summary Completion practice', dur: 30 },
+      { title: 'Reading Practice: Full Test', detail: 'Module 6b — Full reading practice test', dur: 60 },
+      // Module 7: Table Completion
+      { title: 'Table Completion — Material 1', detail: 'Module 7 — Table Completion strategy video 1', dur: 20 },
+      { title: 'Table Completion — Material 2', detail: 'Module 7 — Table Completion strategy video 2', dur: 15 },
+      { title: 'Table Completion sample questions', detail: 'Module 7 — Table Completion practice', dur: 25 },
+      { title: 'Reading Practice: Table Completion', detail: 'Module 7 — Practice PDF: Table Completion', dur: 50 },
+      // Module 8: Diagram Completion
+      { title: 'Diagram Labelling — Material 1', detail: 'Module 8 — Diagram labelling strategy video 1', dur: 15 },
+      { title: 'Diagram Labelling — Material 2', detail: 'Module 8 — Diagram labelling strategy video 2', dur: 25 },
+      { title: 'Diagram Labelling sample questions', detail: 'Module 8 — Diagram labelling practice', dur: 25 },
+      { title: 'Reading Practice: Diagram Labeling', detail: 'Module 8 — Practice PDF: Diagram Labeling', dur: 60 },
+      // Module 9: Yes No Not Given
+      { title: 'Yes No Not Given — Material 1', detail: 'Module 9 — Yes, No, Not Given strategy video 1', dur: 15 },
+      { title: 'Yes No Not Given — Material 2', detail: 'Module 9 — Yes, No, Not Given strategy video 2', dur: 15 },
+      { title: 'Yes No Not Given sample questions', detail: 'Module 9 — Yes, No, Not Given practice', dur: 30 },
+      { title: 'Full Reading Practice', detail: 'Module 9 — Full timed reading test (Cambridge IELTS)', dur: 60 },
+      { title: 'IELTS Reading Test', detail: 'Module 9 — Full IELTS Reading Test simulation', dur: 60 },
+    ],
+    Writing: [
+      // Session 1
+      { title: 'IELTS Writing Task 1 Overview', detail: 'Session 1 — Understand IELTS Writing in JUST 25 minutes!', dur: 25 },
+      { title: 'Understanding the Structure', detail: 'Session 1 — How to Ace IELTS Academic Writing Task 1: LINE GRAPH', dur: 20 },
+      { title: 'Vocabulary for Charts', detail: 'Session 1 — Band 9 Vocabulary for IELTS Academic Writing Task 1: CHARTS', dur: 20 },
+      { title: 'Vocabulary Practice (changes + describing table)', detail: 'Session 1 — Practice PDF: changes (data) + describing table', dur: 40 },
+      { title: 'Writing Task 1 Practice: Graph', detail: 'Session 1 — Practice PDF: Task 1 Chart', dur: 20 },
+      // Session 2
+      { title: 'Writing Task 1 Pie Chart Explanation', detail: 'Session 2 — BAND 9 IELTS Writing Task 1 SAMPLE | Academic - Pie Charts', dur: 20 },
+      { title: 'How to compare 3 Pie Charts', detail: 'Session 2 — Easiest way to compare 3 pie charts', dur: 10 },
+      { title: 'Writing Task 1 Practice: Pie Chart', detail: 'Session 2 — Practice PDF: Task 1 Pie Chart', dur: 20 },
+      { title: 'Vocabulary for Maps', detail: 'Session 2 — Practice PDF: maps vocabulary', dur: 25 },
+      { title: 'Writing Task 1 Maps Explanation', detail: 'Session 2 — Band 9 Vocabulary for IELTS Academic Writing Task 1: MAPS', dur: 20 },
+      { title: 'Writing Task 1 Maps Sample Question', detail: 'Session 2 — IELTS Academic Writing Task 1 Maps', dur: 15 },
+      { title: 'Writing Task 1 Practice: Maps', detail: 'Session 2 — Practice PDF: Task 1 Maps', dur: 20 },
+      // Session 3
+      { title: 'Selecting Data from Tables', detail: 'Session 3 — 3 tips for grouping and selecting data in a table', dur: 15 },
+      { title: 'Writing Task 1 Table Sample Question', detail: 'Session 3 — IELTS Academic Task 1 Writing: Tables', dur: 15 },
+      { title: 'Writing Task 1 Practice: Table', detail: 'Session 3 — Practice PDF: Task 1 Table', dur: 20 },
+      { title: 'Writing Task 1 Mixed Chart Explanation', detail: 'Session 3 — IELTS Academic Writing Task 1 - Mixed Charts', dur: 15 },
+      { title: 'Mixed Chart Sample Answer 1', detail: 'Session 3 — How to Describe Mixed Charts With a Lot of Data', dur: 15 },
+      { title: 'Mixed Chart Sample Answer 2', detail: 'Session 3 — Band 9 IELTS Academic Writing Task 1 SAMPLE: Bar + Pie Chart', dur: 15 },
+      { title: 'Writing Task 1 Practice: Mixed Chart', detail: 'Session 3 — Practice PDF: Task 1 Mix Chart', dur: 25 },
+      // Session 4
+      { title: 'Writing Task 1 Process Explanation', detail: 'Session 4 — How to Describe a Process Diagram [Band 9 Guide]', dur: 15 },
+      { title: 'Writing Task 1 Process Sample Answer', detail: 'Session 4 — How to describe a life cycle diagram', dur: 15 },
+      { title: 'Vocabulary about Process', detail: 'Session 4 — Practice PDF: process vocabulary', dur: 15 },
+      { title: 'Writing Task 1 Practice: Process', detail: 'Session 4 — Practice PDF: Task 1 Process', dur: 25 },
+      { title: 'Writing Task 2 Overview', detail: 'Session 4 — Overview of Task 2 structure and requirements', dur: 20 },
+      { title: 'How to write the perfect introduction', detail: 'Session 4 — Writing Task 2 introduction strategies', dur: 25 },
+      // Session 5
+      { title: 'Linking Words Material', detail: 'Session 5 — Linking Words for cohesion and coherence', dur: 35 },
+      { title: 'Linking Words Vocabulary', detail: 'Session 5 — Linking Words Vocabulary reference', dur: 20 },
+      { title: 'How to Conclude the Body Paragraph', detail: 'Session 5 — Concluding body paragraphs effectively', dur: 15 },
+      { title: 'Writing Task 2 Agree/Disagree Material', detail: 'Session 5 — Agree Disagree essay structure and strategies', dur: 20 },
+      { title: 'Writing Task 2 Practice: Agree Disagree', detail: 'Session 5 — Timed practice: Agree/Disagree essay', dur: 40 },
+      // Session 6
+      { title: 'Writing Task 2 Advantage/Disadvantage Material', detail: 'Session 6 — Advantage Disadvantage essay full guide', dur: 60 },
+      { title: 'Vocabulary Practice: Education', detail: 'Session 6 — Education vocabulary for Task 2', dur: 20 },
+      { title: 'Writing Task 2 Practice: Advantage Disadvantage', detail: 'Session 6 — Timed practice: Advantage/Disadvantage essay', dur: 40 },
+      // Session 7
+      { title: 'How to Write Examples', detail: 'Session 7 — Techniques for using examples in Task 2', dur: 15 },
+      { title: 'Writing Task 2 Problem/Solution Material', detail: 'Session 7 — Problem Solution essay full guide', dur: 60 },
+      { title: 'Writing Task 2 Practice: Problem Solution', detail: 'Session 7 — Timed practice: Problem/Solution essay', dur: 40 },
+      // Session 8
+      { title: 'Writing Grammar: Complex Sentence', detail: 'Session 8 — Complex sentences for grammatical range', dur: 25 },
+      { title: 'Writing Task 2 Discuss Both Views Material', detail: 'Session 8 — Discuss Both Views essay structure', dur: 15 },
+      { title: 'Vocabulary Practice: Science & Technology', detail: 'Session 8 — Science and technology vocabulary', dur: 20 },
+      { title: 'Writing Full Practice 1: Task 1 & Task 2', detail: 'Session 8 — Full timed writing: Task 1 (20 min) + Task 2 (40 min)', dur: 60 },
+      // Session 9
+      { title: 'Writing Task 2 Double Questions Material', detail: 'Session 9 — Double Questions essay structure', dur: 20 },
+      { title: 'Developing Double Question Paragraph', detail: 'Session 9 — Paragraph development for Double Questions', dur: 20 },
+      { title: 'Vocabulary Practice: Healthcare', detail: 'Session 9 — Healthcare vocabulary for Task 2', dur: 20 },
+      { title: 'Writing Full Practice 2: Task 1 & Task 2', detail: 'Session 9 — Full timed writing: Task 1 (20 min) + Task 2 (40 min)', dur: 60 },
+      // Session 10
+      { title: 'Reading Practice (combined)', detail: 'Session 10 — Reading practice combined with writing day', dur: 60 },
+      { title: 'Writing Full Practice 3: Task 1 & Task 2', detail: 'Session 10 — Final full timed writing: Task 1 + Task 2', dur: 60 },
+    ],
+    Speaking: [
+      // Module 1
+      { title: 'Understanding the IELTS Speaking format', detail: 'Module 1 — IELTS Speaking Test: Guide for Beginners', dur: 29 },
+      { title: 'IELTS Speaking scoring criteria', detail: 'Module 1 — How IELTS Speaking is Scored: How to Get a Band 9', dur: 12 },
+      // Module 2
+      { title: 'Speaking Part 1 — Questions & structure', detail: 'Module 2 — IELTS Speaking Part 1: Questions with Jay & Alex', dur: 16 },
+      { title: 'How to start speaking in the IELTS test', detail: 'Module 2 — How to Start Speaking in IELTS: Part 1', dur: 21 },
+      // Module 3
+      { title: 'Speaking Part 2 — Cue card strategy', detail: 'Module 3 — IELTS Speaking Part 2 | 5 Tips to help you succeed', dur: 20 },
+      { title: 'Note taking strategy (1-minute prep)', detail: 'Module 3 — 2 Quick Methods for the IELTS Speaking 1-Minute Preparation', dur: 7 },
+      { title: 'Fluency & Coherence', detail: 'Module 3 — IELTS Speaking: Bands 5 to 8 - Fluency and Coherence', dur: 6 },
+      // Module 4
+      { title: 'Speaking Part 3 — Discussion strategies', detail: 'Module 4 — IELTS Speaking Part 3', dur: 16 },
+      { title: 'Common mistakes in Speaking test', detail: 'Module 4 — IELTS Speaking: Don\'t Make These 9 Mistakes!', dur: 13 },
+      // Module 5
+      { title: 'Practice IELTS Speaking (full test)', detail: 'Module 5 — IELTS Speaking Practice Test with Answers', dur: 15 },
+      { title: 'IELTS Speaking Mock Test (Band 9)', detail: 'Module 5 — IELTS Speaking Test - Perfect Band 9 analysis', dur: 30 },
+    ]
+  };
+
+  // Cambridge IELTS extension tasks — used when Bella's pool is exhausted
+  // Structure: Book 20→1, each book has 4 tests.
+  // Each test is used once per skill: Test 1 Day = Listening of Test 1, Reading of Test 1, etc.
+  // So 1 test covers multiple skill days — test index is GLOBAL across all skills.
+
+  function getCambridgeTask(skill, testIdx) {
+    // testIdx is global: 0 = Book 20 Test 1, 1 = Book 20 Test 2, ..., 3 = Book 20 Test 4,
+    //                    4 = Book 19 Test 1, ..., 79 = Book 1 Test 4, then cycles
+    const TESTS_PER_BOOK = 4;
+    const TOTAL_BOOKS = 20;
+    const totalTests = TOTAL_BOOKS * TESTS_PER_BOOK; // 80 total
+    const pos = testIdx % totalTests;
+    const bookIndex = Math.floor(pos / TESTS_PER_BOOK); // 0 = Book 20, 1 = Book 19 ...
+    const testNum = (pos % TESTS_PER_BOOK) + 1;         // 1, 2, 3, 4
+    const bookNum = 20 - bookIndex;                     // 20, 19, 18 ... 1
+
+    switch (skill) {
+      case 'Listening':
+        // Real IELTS Listening: 30 min audio + 10 min transfer = 40 min. Review +15 min.
+        return {
+          title: `Cambridge IELTS ${bookNum}, Test ${testNum} — Listening`,
+          detail: `Cambridge IELTS Book ${bookNum}, Test ${testNum} — Full Listening: 30 min audio + 10 min answer transfer. Self-mark using answer key, then re-read transcripts for wrong answers.`,
+          dur: 45
+        };
+      case 'Reading':
+        // Real IELTS Reading: 60 min (3 passages). Review +20 min.
+        return {
+          title: `Cambridge IELTS ${bookNum}, Test ${testNum} — Reading`,
+          detail: `Cambridge IELTS Book ${bookNum}, Test ${testNum} — Full Reading: 60 min timed (3 passages, 40 questions). Self-mark, then review every wrong answer and note which question type tripped you.`,
+          dur: 60
+        };
+      case 'Writing':
+        // Real IELTS Writing: Task 1 = 20 min + Task 2 = 40 min = 60 min total.
+        return {
+          title: `Cambridge IELTS ${bookNum}, Test ${testNum} — Writing`,
+          detail: `Cambridge IELTS Book ${bookNum}, Test ${testNum} — Full Writing: Task 1 (20 min, min 150 words) + Task 2 (40 min, min 250 words). Compare your answer with the sample response in the answer key.`,
+          dur: 60
+        };
+      case 'Speaking':
+        // Real IELTS Speaking: Part 1 (~4 min) + Part 2 (~3 min) + Part 3 (~5 min) ≈ 12 min + record & review.
+        return {
+          title: `Cambridge IELTS ${bookNum}, Test ${testNum} — Speaking`,
+          detail: `Cambridge IELTS Book ${bookNum}, Test ${testNum} — Full Speaking mock: Part 1 (familiar topics), Part 2 (cue card, 1 min prep + 2 min talk), Part 3 (discussion). Record yourself, play back, note vocabulary gaps and grammar errors.`,
+          dur: 30
+        };
+    }
+  }
+
+  function selectTasksForDay(pool, idx, skill, hoursDay) {
+    const targetMins = hoursDay * 60;
+    const tasks = [];
+    let used = 0;
+
+    while (used < targetMins) {
+      let task;
+      if (idx[skill] < pool.length) {
+        task = pool[idx[skill]];
+        idx[skill]++;
+      } else {
+        // Bella's pool exhausted — use Cambridge, each skill has its own test counter
+        task = getCambridgeTask(skill, idx._cam[skill]);
+        idx._cam[skill]++;
+      }
+
+      if (used > 0 && (used + task.dur) > targetMins + 15) break;
+
+      tasks.push({ ...task, skill, dur: `${task.dur} min` });
+      used += task.dur;
+
+      if (used >= targetMins - 10) break;
+    }
+
+    if (tasks.length === 0) {
+      const task = idx[skill] < pool.length
+        ? pool[idx[skill]++]
+        : getCambridgeTask(skill, idx._cam[skill]++);
+      tasks.push({ ...task, skill, dur: `${task.dur} min` });
+    }
+
+    return tasks;
+  }
+
+  const resources = [
+    { icon: '📖', title: 'Cambridge IELTS Books (1–18)', desc: 'Official practice tests by Cambridge. The gold standard for realistic exam preparation.', tag: 'Official', tagColor: '#1565C0', tagBg: '#E8F4FD' },
+    { icon: '🌐', title: 'IELTS.org Practice Materials', desc: 'Free sample test papers and band score descriptors directly from the exam board.', tag: 'Free', tagColor: '#2E7D32', tagBg: '#E8F5E9' },
+    { icon: '🎧', title: 'BBC Learning English', desc: 'Daily podcasts and videos for natural listening practice. Focus on "6 Minute English".', tag: 'Listening', tagColor: '#1565C0', tagBg: '#E8F4FD' },
+    { icon: '✍️', title: 'IELTS Liz (ieltsliz.com)', desc: 'Free writing task 1 & 2 lessons with model answers and vocabulary tips.', tag: 'Writing', tagColor: '#512DA8', tagBg: '#EDE7F6' },
+    { icon: '📱', title: 'Magoosh IELTS App', desc: 'Structured vocabulary and practice questions with progress tracking on mobile.', tag: 'App', tagColor: '#E65100', tagBg: '#FFF3E0' },
+    { icon: '🗣️', title: 'IELTS Speaking Practice (YouTube)', desc: 'Watch Part 1, 2, 3 mock interviews to hear band 7–9 responses naturally.', tag: 'Speaking', tagColor: '#2E7D32', tagBg: '#E8F5E9' },
+    { icon: '📝', title: 'Academic Word List (AWL)', desc: 'Sublist 1–10 covers 10% of academic texts. Master these 570 word families.', tag: 'Vocabulary', tagColor: '#C9963D', tagBg: '#FBF3E5' },
+    { icon: '⏱️', title: 'IELTS Mentor (ieltsmentor.com)', desc: 'Timed reading passages with full answer explanations and question type guides.', tag: 'Reading', tagColor: '#E65100', tagBg: '#FFF3E0' }
+  ];
+
+  function getBandCEFR(band) {
+    if (band >= 8.5) return { cefr: 'C2', desc: 'Mastery / Proficiency' };
+    if (band >= 7.0) return { cefr: 'C1', desc: 'Advanced' };
+    if (band >= 5.5) return { cefr: 'B2', desc: 'Upper Intermediate' };
+    if (band >= 4.0) return { cefr: 'B1', desc: 'Intermediate' };
+    if (band >= 3.0) return { cefr: 'A2', desc: 'Elementary' };
+    return { cefr: 'A1', desc: 'Beginner' };
+  }
+
+  function calcIELTSOverall(l, r, w, s) {
+    const avg = (l + r + w + s) / 4;
+    const dec = avg % 1;
+    if (dec < 0.25) return Math.floor(avg);
+    if (dec < 0.75) return Math.floor(avg) + 0.5;
+    return Math.ceil(avg);
+  }
+
+  function recalcOverall() {
+    const l = parseFloat(document.getElementById('bandListening').value);
+    const r = parseFloat(document.getElementById('bandReading').value);
+    const w = parseFloat(document.getElementById('bandWriting').value);
+    const s = parseFloat(document.getElementById('bandSpeaking').value);
+    const overall = calcIELTSOverall(l, r, w, s);
+    const { cefr, desc } = getBandCEFR(overall);
+    document.getElementById('overallBand').textContent = overall.toFixed(1);
+    document.getElementById('overallCEFR').textContent = cefr;
+    document.getElementById('overallDesc').textContent = desc;
+  }
+
+  function recalcTargetOverall() {
+    const l = parseFloat(document.getElementById('targetListening').value);
+    const r = parseFloat(document.getElementById('targetReading').value);
+    const w = parseFloat(document.getElementById('targetWriting').value);
+    const s = parseFloat(document.getElementById('targetSpeaking').value);
+    const overall = calcIELTSOverall(l, r, w, s);
+    const { cefr, desc } = getBandCEFR(overall);
+    document.getElementById('targetOverallBand').textContent = overall.toFixed(1);
+    document.getElementById('targetOverallCEFR').textContent = cefr;
+    document.getElementById('targetOverallDesc').textContent = desc;
+    recalcStudyDays();
+  }
+
+  function recalcStudyDays() {
+    const startVal = document.getElementById('startDate').value;
+    const examVal = document.getElementById('examDate').value;
+    if (!startVal || !examVal) {
+      document.getElementById('hoursRecValue').textContent = '—';
+      document.getElementById('hoursRecReason').textContent = 'Set both dates to get a recommendation';
+      document.getElementById('hoursRecDisplay').style.background = 'var(--teal-light)';
+      document.getElementById('hoursRecDisplay').style.borderColor = 'var(--teal)';
+      document.getElementById('hoursRecValue').style.color = 'var(--teal)';
+      return;
+    }
+    const start = new Date(startVal);
+    const exam = new Date(examVal);
+    const totalDays = Math.ceil((exam - start) / 864e5);
+    if (totalDays <= 0) {
+      document.getElementById('hoursRecValue').textContent = '—';
+      document.getElementById('hoursRecReason').textContent = 'Exam date must be after start date';
+      return;
+    }
+
+    const curL = parseFloat(document.getElementById('bandListening').value || 5);
+    const curR = parseFloat(document.getElementById('bandReading').value || 5);
+    const curW = parseFloat(document.getElementById('bandWriting').value || 5);
+    const curS = parseFloat(document.getElementById('bandSpeaking').value || 5);
+    const tgtL = parseFloat(document.getElementById('targetListening').value || 6);
+    const tgtR = parseFloat(document.getElementById('targetReading').value || 6);
+    const tgtW = parseFloat(document.getElementById('targetWriting').value || 6);
+    const tgtS = parseFloat(document.getElementById('targetSpeaking').value || 6);
+    const curOverall = calcIELTSOverall(curL, curR, curW, curS);
+    const tgtOverall = calcIELTSOverall(tgtL, tgtR, tgtW, tgtS);
+    const gap = Math.max(0, tgtOverall - curOverall);
+
+    // Lookup table: recommended hrs/day based on gap and time bracket
+    // Rows = gap (0, 0.5, 1.0, 1.5, 2.0, 2.5+)
+    // Cols = totalDays bracket: ≤30, ≤60, ≤90, >90
+    // Designed so gap 1.0 / 30d = 3hr, gap 2.0 / 30d = 6hr, etc.
+    const table = {
+      //        ≤30  ≤60  ≤90  >90
+      0.0:  [   1,   1,   1,   1 ],
+      0.5:  [   2,   1,   1,   1 ],
+      1.0:  [   3,   2,   2,   1 ],
+      1.5:  [   4,   3,   2,   2 ],
+      2.0:  [   6,   4,   3,   3 ],
+      2.5:  [   7,   5,   4,   3 ],
+      3.0:  [   7,   6,   5,   4 ],
+    };
+    // Round gap to nearest 0.5 step, clamp to table range
+    const gapKey = Math.min(3.0, Math.round(gap * 2) / 2);
+    const row = table[gapKey] || table[3.0];
+    const col = totalDays <= 30 ? 0 : totalDays <= 60 ? 1 : totalDays <= 90 ? 2 : 3;
+    let rec = row[col];
+    if (gap <= 0) rec = 1;
+
+    // Warning levels
+    const isExtreme = (gap >= 2.0 && totalDays <= 30) || (gap >= 2.5 && totalDays <= 60);
+    const isHigh = (gap >= 1.5 && totalDays <= 30) || (gap >= 2.0 && totalDays <= 60) || (gap >= 2.5);
+    const isGood = gap <= 1.0 || totalDays >= 60;
+
+    let bgColor, borderColor, textColor, warningText;
+    if (isExtreme) {
+      bgColor = 'var(--accent-light)'; borderColor = 'var(--accent)'; textColor = 'var(--accent)';
+      warningText = `⚠️ ${totalDays} days · gap +${gap.toFixed(1)} — very challenging, consider more time`;
+    } else if (isHigh) {
+      bgColor = '#FBF3E5'; borderColor = 'var(--gold)'; textColor = 'var(--gold)';
+      warningText = `${totalDays} study days · gap +${gap.toFixed(1)} — intense but possible`;
+    } else if (gap <= 0) {
+      bgColor = 'var(--teal-light)'; borderColor = 'var(--teal)'; textColor = 'var(--teal)';
+      warningText = `${totalDays} study days · already at target — maintain pace`;
+    } else {
+      bgColor = 'var(--teal-light)'; borderColor = 'var(--teal)'; textColor = 'var(--teal)';
+      warningText = `${totalDays} study days · gap +${gap.toFixed(1)} — realistic & achievable`;
+    }
+
+    document.getElementById('hoursRecDisplay').style.background = bgColor;
+    document.getElementById('hoursRecDisplay').style.borderColor = borderColor;
+    document.getElementById('hoursRecValue').style.color = textColor;
+    document.getElementById('hoursRecValue').textContent = `${rec} hr${rec !== 1 ? 's' : ''}/day`;
+    document.getElementById('hoursRecReason').textContent = warningText;
+    return rec;
+  }
+
+  function init() {
+    const start = new Date();
+    const exam = new Date();
+    exam.setMonth(exam.getMonth() + 3);
+    document.getElementById('startDate').valueAsDate = start;
+    document.getElementById('examDate').valueAsDate = exam;
+    recalcOverall();
+    recalcTargetOverall();
+    generatePlan(); renderResources(); renderProgress(); renderStudyLog();
+  }
+
+  function generatePlan() {
+    state.bandL = parseFloat(document.getElementById('bandListening').value);
+    state.bandR = parseFloat(document.getElementById('bandReading').value);
+    state.bandW = parseFloat(document.getElementById('bandWriting').value);
+    state.bandS = parseFloat(document.getElementById('bandSpeaking').value);
+    state.targetL = parseFloat(document.getElementById('targetListening').value);
+    state.targetR = parseFloat(document.getElementById('targetReading').value);
+    state.targetW = parseFloat(document.getElementById('targetWriting').value);
+    state.targetS = parseFloat(document.getElementById('targetSpeaking').value);
+    state.currentBand = calcIELTSOverall(state.bandL, state.bandR, state.bandW, state.bandS);
+    state.targetBand = calcIELTSOverall(state.targetL, state.targetR, state.targetW, state.targetS);
+    state.ieltsType = document.getElementById('ieltsType').value;
+    const startVal = document.getElementById('startDate').value;
+    const examVal = document.getElementById('examDate').value;
+    state.startDate = startVal ? new Date(startVal) : null;
+    state.examDate = examVal ? new Date(examVal) : null;
+    // Determine recommended hours
+    state.hoursDay = recalcStudyDays() || 2;
+    studyLogPage = 0;
+    buildDateTaskMap();
+    updateDashboard(); renderStudyLog();
+  }
+
+  function updateDashboard() {
+    document.getElementById('m-current').textContent = state.currentBand.toFixed(1);
+    const { cefr, desc } = getBandCEFR(state.currentBand);
+    document.getElementById('m-current-cefr').textContent = cefr;
+    document.getElementById('m-current-desc').textContent = desc;
+
+    document.getElementById('m-target').textContent = state.targetBand.toFixed(1);
+    const tgt = getBandCEFR(state.targetBand);
+    document.getElementById('m-target-cefr').textContent = tgt.cefr;
+    document.getElementById('m-target-desc').textContent = tgt.desc;
+
+    if (state.startDate && state.examDate) {
+      const studyLeft = Math.max(0, Math.ceil((state.examDate - today) / (1000 * 60 * 60 * 24)));
+      const totalStudy = Math.ceil((state.examDate - state.startDate) / (1000 * 60 * 60 * 24));
+      document.getElementById('m-study-days').textContent = studyLeft;
+      document.getElementById('m-study-sub').textContent = `of ${totalStudy} total days`;
+    }
+    document.getElementById('m-hours-rec').textContent = state.hoursDay;
+    document.getElementById('m-hours-sub').textContent = 'hrs/day recommended';
+  }
+
+  // Build a date-to-tasks map when a plan is generated (deterministic)
+  let dateTaskMap = {};
+
+  function buildDateTaskMap() {
+    dateTaskMap = {};
+    if (!state.startDate || !state.examDate) return;
+    // idx tracks position in each skill's Bella pool + shared Cambridge test counter
+    const idx = { Listening: 0, Reading: 0, Writing: 0, Speaking: 0, _cam: { Listening: 0, Reading: 0, Writing: 0, Speaking: 0 } };
+    const totalDays = Math.ceil((state.examDate - state.startDate) / 864e5);
+    const restDays = totalDays <= 30 ? new Set()
+      : totalDays <= 90 ? new Set([3])
+      : new Set([3, 0]);
+    const skillMap = { 1: 'Listening', 2: 'Reading', 3: 'Writing', 4: 'Speaking', 5: 'Listening', 6: 'Reading', 0: 'Writing' };
+    const cur = new Date(state.startDate);
+    cur.setHours(0, 0, 0, 0);
+    while (cur <= state.examDate) {
+      const dow = cur.getDay();
+      const dateStr = cur.toDateString();
+      if (!restDays.has(dow)) {
+        const skill = skillMap[dow];
+        if (skill) {
+          const pool = bellaTasks[skill];
+          dateTaskMap[dateStr] = selectTasksForDay(pool, idx, skill, state.hoursDay);
+        }
+      }
+      cur.setDate(cur.getDate() + 1);
+    }
+  }
+
+  function getTasksForDay(date) {
+    return dateTaskMap[date.toDateString()] || [];
+  }
+
+  function toggleTask(key, el, dur) {
+    const isDone = el.classList.toggle('checked');
+    state.completedTasks[key] = isDone;
+    el.nextElementSibling.querySelector('.task-title').classList.toggle('done', isDone);
+    localStorage.setItem('ielts_tasks', JSON.stringify(state.completedTasks));
+    renderStudyLog(); // refresh checkmarks
+  }
+
+  // Study log pagination: shows 4 weeks at a time (or fewer if study period is short)
+  let studyLogPage = 0; // page 0 = first 4 weeks from startDate
+
+  function getStudyLogWeeks() {
+    // Build array of all weeks (Mon-Sun rows) from startDate to examDate
+    if (!state.startDate || !state.examDate) return [];
+    const start = getMonday(state.startDate);
+    const end = state.examDate;
+    const weeks = [];
+    let cur = new Date(start);
+    while (cur <= end) {
+      const weekDays = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(cur);
+        d.setDate(d.getDate() + i);
+        weekDays.push(new Date(d));
+      }
+      weeks.push(weekDays);
+      cur.setDate(cur.getDate() + 7);
+    }
+    return weeks;
+  }
+
+  function renderStudyLog() {
+    const weeks = getStudyLogWeeks();
+    if (weeks.length === 0) {
+      document.getElementById('studyLogGrid').innerHTML = '<div style="padding:1rem;text-align:center;color:var(--ink-soft);font-size:13px;">Set your start date and exam date to generate your study log.</div>';
+      document.getElementById('studylog-range').textContent = '';
+      document.getElementById('studylog-nav').style.display = 'none';
+      return;
+    }
+
+    const totalDays = Math.ceil((state.examDate - state.startDate) / 864e5);
+    // Page size: if ≤14 days → show all; if ≤28 days → show all; else → 4 weeks per page
+    const pageSize = totalDays <= 14 ? weeks.length : 4;
+    const totalPages = Math.ceil(weeks.length / pageSize);
+    studyLogPage = Math.max(0, Math.min(studyLogPage, totalPages - 1));
+
+    document.getElementById('studylog-nav').style.display = totalPages > 1 ? 'flex' : 'none';
+
+    const pageWeeks = weeks.slice(studyLogPage * pageSize, studyLogPage * pageSize + pageSize);
+
+    // Range label
+    const firstDay = pageWeeks[0][0];
+    const lastDay = pageWeeks[pageWeeks.length - 1][6];
+    document.getElementById('studylog-range').textContent =
+      `${firstDay.getDate()} ${months[firstDay.getMonth()]} – ${lastDay.getDate()} ${months[lastDay.getMonth()]} ${lastDay.getFullYear()}`;
+
+    let html = '';
+    pageWeeks.forEach(weekDays => {
+      html += `<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">`;
+      weekDays.forEach(d => {
+        const isToday = d.toDateString() === today.toDateString();
+        const isOutOfRange = d < state.startDate || d > state.examDate;
+        const isFuture = d > today;
+        const tasks = isOutOfRange ? [] : getTasksForDay(d);
+        const isRest = tasks.length === 0;
+        const completedCount = tasks.filter((_, idx) => state.completedTasks[`${d.toDateString()}-${idx}`]).length;
+        const allDone = tasks.length > 0 && completedCount === tasks.length;
+        const dow = d.getDay();
+
+        let cardStyle, numColor;
+        if (isOutOfRange) {
+          cardStyle = 'background:transparent;border:1px dashed rgba(0,0,0,0.08);cursor:default;';
+          numColor = 'var(--border)';
+        } else if (isToday) {
+          cardStyle = 'background:var(--accent-light);border:1.5px solid var(--accent);cursor:pointer;';
+          numColor = 'var(--accent)';
+        } else if (allDone) {
+          cardStyle = 'background:var(--teal-light);border:1.5px solid var(--teal);cursor:pointer;';
+          numColor = 'var(--teal)';
+        } else if (isFuture) {
+          cardStyle = 'background:white;border:1px solid var(--border);cursor:pointer;';
+          numColor = 'var(--ink)';
+        } else {
+          cardStyle = 'background:var(--section-bg);border:1px solid var(--border);cursor:pointer;';
+          numColor = 'var(--ink-soft)';
+        }
+
+        const clickAttr = isOutOfRange ? '' : `onclick="selectDay('${d.toDateString()}', '${d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'short'})}', this)"`;
+        const skillPill = !isRest && !isOutOfRange ? `<div class="day-pill ${pillClass[tasks[0].skill]}" style="margin-top:2px;">${tasks[0].skill.slice(0,1)}</div>` : '';
+        const checkMark = allDone ? `<div style="font-size:8px;color:var(--teal);font-weight:700;">✓</div>` : '';
+        const restLabel = isRest && !isOutOfRange ? `<div style="font-size:7px;color:var(--ink-soft);letter-spacing:0.5px;">rest</div>` : '';
+
+        html += `<div style="${cardStyle}border-radius:10px;padding:6px 4px;min-height:72px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all 0.15s;" ${clickAttr}>
+          <div style="font-size:9px;font-weight:600;color:${isOutOfRange ? 'transparent' : 'var(--ink-soft)'};letter-spacing:0.5px;">${isOutOfRange ? '' : days[dow].toUpperCase()}</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:${numColor};">${isOutOfRange ? '' : d.getDate()}</div>
+          ${skillPill}${restLabel}${checkMark}
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    document.getElementById('studyLogGrid').innerHTML = html;
+  }
+
+  let _selectedDayEl = null;
+  function selectDay(dateStr, label, el) {
+    if (_selectedDayEl) _selectedDayEl.style.outline = '';
+    if (el) { el.style.outline = '2px solid var(--accent)'; _selectedDayEl = el; }
+
+    const d = new Date(dateStr);
+    const tasks = getTasksForDay(d);
+
+    if (tasks.length === 0) {
+      document.getElementById('selectedDayLabel').textContent = label;
+      document.getElementById('dayTasks').innerHTML = '<div style="padding:1.5rem;text-align:center;color:var(--ink-soft);font-size:13px;">Rest day — take a break and recharge.</div>';
+      return;
+    }
+
+    // Compute total duration
+    const totalMins = tasks.reduce((s, t) => s + parseInt(t.dur), 0);
+    const totalHrs = (totalMins / 60).toFixed(1);
+    const recMins = state.hoursDay * 60;
+    const diff = totalMins - recMins;
+    const diffStr = diff === 0 ? '✓ exact' : diff > 0 ? `+${diff} min` : `${diff} min`;
+    const diffColor = Math.abs(diff) <= 15 ? 'var(--teal)' : 'var(--gold)';
+
+    document.getElementById('selectedDayLabel').innerHTML =
+      `${label} <span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:8px;">${totalMins} min total</span><span style="font-size:10px;font-weight:600;color:${diffColor};margin-left:6px;padding:2px 7px;background:${Math.abs(diff)<=15?'var(--teal-light)':'var(--gold-light)'};border-radius:20px;">${diffStr} vs ${state.hoursDay}h rec.</span>`;
+
+    document.getElementById('dayTasks').innerHTML = tasks.map((t, i) => {
+      const key = `${dateStr}-${i}`;
+      const done = state.completedTasks[key];
+      return `<div class="task-item">
+        <div class="task-check ${done ? 'checked' : ''}" onclick="toggleTask('${key}', this, '${t.dur}')"></div>
+        <div class="task-info"><div class="task-title ${done ? 'done' : ''}">${t.title}</div><div class="task-meta">${t.detail}</div></div>
+        <span class="task-badge" style="background:${skillBgs[t.skill]};color:${skillColors[t.skill]};">${t.skill}</span>
+        <span class="task-dur">${t.dur}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function changeStudyPage(dir) {
+    studyLogPage += dir;
+    renderStudyLog();
+  }
+
+  function getMonday(d) {
+    const dt = new Date(d);
+    const day = dt.getDay();
+    const diff = dt.getDate() - day + (day === 0 ? -6 : 1);
+    dt.setDate(diff); dt.setHours(0,0,0,0);
+    return dt;
+  }
+
+  function renderResources() {
+    document.getElementById('resourcesGrid').innerHTML = resources.map(r =>
+      `<div class="resource-card">
+        <div class="resource-icon">${r.icon}</div>
+        <div class="resource-title">${r.title}</div>
+        <div class="resource-desc">${r.desc}</div>
+        <span class="resource-tag" style="background: ${r.tagBg}; color: ${r.tagColor};">${r.tag}</span>
+      </div>`
+    ).join('');
+  }
+
+  function addLog() {
+    const skill = document.getElementById('log-skill').value;
+    const score = document.getElementById('log-score').value;
+    const activity = document.getElementById('log-activity').value.trim();
+    if (!activity) { document.getElementById('log-activity').focus(); return; }
+    const entry = {
+      date: today.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+      skill, score: score || '—', activity,
+      time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+    };
+    state.logs.unshift(entry);
+    localStorage.setItem('ielts_logs', JSON.stringify(state.logs));
+    document.getElementById('log-score').value = '';
+    document.getElementById('log-activity').value = '';
+    renderProgress();
+  }
+
+  function renderProgress() {
+    if (state.logs.length === 0) {
+      document.getElementById('progressLog').innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--ink-soft); font-size: 13px;">No entries yet. Log your first study session above.</div>';
+      return;
+    }
+    document.getElementById('progressLog').innerHTML = state.logs.map(l =>
+      `<div class="log-entry">
+        <div style="text-align: center; min-width: 48px;">
+          <div class="log-date">${l.date}</div>
+          <div class="log-date" style="margin-top: 2px;">${l.time}</div>
+          ${l.score !== '—' ? `<div class="log-score">${l.score}</div>` : ''}
+        </div>
+        <div class="log-body">
+          <div class="log-title">${l.activity}</div>
+          <div class="log-detail">
+            <span class="task-badge" style="display: inline-block; background: ${skillBgs[l.skill]}; color: ${skillColors[l.skill]};">${l.skill}</span>
+            ${l.score !== '—' ? `<span style="margin-left: 8px; font-size: 12px; color: var(--ink-soft);">Band: ${l.score}</span>` : ''}
+          </div>
+        </div>
+      </div>`
+    ).join('');
+  }
+
+  function showTab(name, btn) {
+    document.querySelectorAll('[id^="tab-"]').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById('tab-' + name);
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('fade-in'), 10);
+    btn.classList.add('active');
+  }
+
+  init();
+</script>
+</body>
+</html>
